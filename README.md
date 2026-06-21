@@ -105,15 +105,42 @@ SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
 SaveManager:SetIgnoreIndexes({})
 
-local BringItemsAtivo = false
+local AutoCampfireAtivo = false
+
+local destinoCFrame = CFrame.new(-0.9999504089355469, 1.9999432563781738, 16.499996185302734)
 
 local function puxarItens()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    local rootPart = character:WaitForChild("HumanoidRootPart", 5)
-    if not rootPart then return end
-
     local itens = {
+        workspace.Items:GetChildren()[137],
+        workspace.Items:GetChildren()[75],
+        workspace.Items:GetChildren()[129],
+        workspace.Items:GetChildren()[118],
+        workspace.Items:GetChildren()[68],
+        workspace.Items:GetChildren()[131],
+        workspace.Items:GetChildren()[126],
+        workspace.Items:GetChildren()[66],
+        workspace.Items:GetChildren()[63],
+        workspace.Items:GetChildren()[83],
+        workspace.Items["Fuel Canister"],
+        workspace.Items:GetChildren()[78],
+        workspace.Items:GetChildren()[218],
+        workspace.Items:GetChildren()[175],
+        workspace.Items:GetChildren()[66],
+        workspace.Items:GetChildren()[63],
+        workspace.Items:GetChildren()[83],
+        workspace.Items["Fuel Canister"],
+        workspace.Items:GetChildren()[78],
+        workspace.Items:GetChildren()[246],
+        workspace.Items:GetChildren()[242],
+        workspace.Items:GetChildren()[225],
+        workspace.Items:GetChildren()[224],
+        workspace.Items:GetChildren()[222],
+        workspace.Items:GetChildren()[193],
+        workspace.Items:GetChildren()[169],
+        workspace.Items:GetChildren()[168],
+        workspace.Items:GetChildren()[194],
+        workspace.Items:GetChildren()[191],
+        workspace.Items:GetChildren()[190],
         workspace.Items:GetChildren()[280],
         workspace.Items:GetChildren()[278],
         workspace.Items:GetChildren()[193],
@@ -121,7 +148,18 @@ local function puxarItens()
         workspace.Items:GetChildren()[193],
         workspace.Items:GetChildren()[201],
         workspace.Items:GetChildren()[196],
-        workspace.Items:GetChildren()[196],
+        workspace.Items:GetChildren()[165],
+        workspace.Items:GetChildren()[161],
+        workspace.Items:GetChildren()[160],
+        workspace.Items:GetChildren()[159],
+        workspace.Items.Coal,
+        workspace.Items:GetChildren()[121],
+        workspace.Items:GetChildren()[137],
+        workspace.Items:GetChildren()[129],
+        workspace.Items:GetChildren()[118],
+        workspace.Items:GetChildren()[68],
+        workspace.Items:GetChildren()[131],
+        workspace.Items:GetChildren()[126],
         workspace.Items:GetChildren()[72],
         workspace.Items:GetChildren()[196],
         workspace.Items:GetChildren()[228],
@@ -130,6 +168,7 @@ local function puxarItens()
         workspace.Items:GetChildren()[29],
         workspace.Items:GetChildren()[27],
         workspace.Items:GetChildren()[26],
+        workspace.Items:GetChildren()[45],
         workspace.Items:GetChildren()[25]
     }
 
@@ -137,27 +176,27 @@ local function puxarItens()
         if item then
             pcall(function()
                 if item:IsA("BasePart") then
-                    item.CFrame = rootPart.CFrame
+                    item.CFrame = destinoCFrame
                 elseif item:IsA("Model") then
-                    item:PivotTo(rootPart.CFrame)
+                    item:PivotTo(destinoCFrame)
                 end
             end)
         end
     end
 end
 
-Tabs.Brings:AddToggle("BringItems", {
-    Title = "Bring fuel",
+Tabs.Brings:AddToggle("AutoCampfire", {
+    Title = "Auto Campfire",
     Default = false,
     Callback = function(Value)
-        BringItemsAtivo = Value
+        AutoCampfireAtivo = Value
 
-        if BringItemsAtivo then
+        if AutoCampfireAtivo then
             task.spawn(function()
-                while BringItemsAtivo do
+                while AutoCampfireAtivo do
                     local ok, err = pcall(puxarItens)
                     if not ok then
-                        warn("[CoelhoHub] Erro no Bring Items: " .. tostring(err))
+                        warn("[CoelhoHub] Erro no Auto Campfire: " .. tostring(err))
                     end
                     task.wait(0.1)
                 end
