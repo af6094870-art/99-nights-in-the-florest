@@ -104,3 +104,60 @@ local Tabs = {
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
 SaveManager:SetIgnoreIndexes({})
+
+local BringItemsAtivo = false
+
+local function puxarItens()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local rootPart = character:WaitForChild("HumanoidRootPart", 5)
+
+    if not rootPart then return end
+
+    local itens = {
+        workspace.Items:GetChildren()[280],
+        workspace.Items:GetChildren()[278],
+        workspace.Items:GetChildren()[193],
+        workspace.Items:GetChildren()[227],
+        workspace.Items:GetChildren()[193],
+        workspace.Items:GetChildren()[201],
+        workspace.Items:GetChildren()[196],
+        workspace.Items:GetChildren()[196],
+        workspace.Items:GetChildren()[72],
+        workspace.Items:GetChildren()[196],
+        workspace.Items:GetChildren()[228],
+        workspace.Items:GetChildren()[188],
+    }
+
+    for _, item in pairs(itens) do
+        if item then
+            pcall(function()
+                if item:IsA("BasePart") then
+                    item.CFrame = rootPart.CFrame
+                elseif item:IsA("Model") then
+                    item:PivotTo(rootPart.CFrame)
+                end
+            end)
+        end
+    end
+end
+
+Tabs.Brings:AddToggle("BringItems", {
+    Title = "Bring fuel",
+    Default = false,
+    Callback = function(Value)
+        BringItemsAtivo = Value
+
+        if BringItemsAtivo then
+            task.spawn(function()
+                while BringItemsAtivo do
+                    local ok, err = pcall(puxarItens)
+                    if not ok then
+                        warn("[CoelhoHub] Erro no Bring Items: " .. tostring(err))
+                    end
+                    task.wait(0.1)
+                end
+            end)
+        end
+    end
+})
