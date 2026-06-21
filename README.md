@@ -107,7 +107,7 @@ SaveManager:SetIgnoreIndexes({})
 
 -- Criando o Toggle dentro da aba Brings
 Tabs.Brings:AddToggle("BringItemsToggle", {
-    Title = "Bring COAL",
+    Title = "Bring Specific Items",
     Default = false,
     Callback = function(Value)
         _G.BringItems = Value
@@ -115,20 +115,15 @@ Tabs.Brings:AddToggle("BringItemsToggle", {
         task.spawn(function()
             while _G.BringItems do
                 pcall(function()
-                    local player = game.Players.LocalPlayer
-                    local character = player.Character
-                    local hrp = character and character:FindFirstChild("HumanoidRootPart")
+                    local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
                     
-                    if hrp then
-                        -- Puxa estritamente os patches que você mandeu, direto para o CFrame do jogador
-                        workspace.Items:GetChildren()[145].CFrame = hrp.CFrame
-                        workspace.Items.Coal.CFrame = hrp.CFrame
-                        workspace.Items:GetChildren()[107].CFrame = hrp.CFrame
-                        workspace.Items:GetChildren()[92].CFrame = hrp.CFrame
-                        workspace.Items:GetChildren()[106].CFrame = hrp.CFrame
-                        workspace.Items:GetChildren()[94].CFrame = hrp.CFrame
-                        workspace.Items:GetChildren()[164].CFrame = hrp.CFrame
-                    end
+                    workspace.Items.Coal.CFrame = hrp.CFrame
+                    workspace.Items:GetChildren()[107].CFrame = hrp.CFrame
+                    workspace.Items:GetChildren()[92].CFrame = hrp.CFrame
+                    workspace.Items:GetChildren()[106].CFrame = hrp.CFrame
+                    workspace.Items:GetChildren()[94].CFrame = hrp.CFrame
+                    workspace.Items:GetChildren()[164].CFrame = hrp.CFrame
+                    workspace.Items:GetChildren()[145].CFrame = hrp.CFrame
                 end)
                 task.wait(0.3)
             end
