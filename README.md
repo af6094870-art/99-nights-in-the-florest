@@ -186,7 +186,7 @@ local function puxarItens()
 end
 
 Tabs.Brings:AddToggle("AutoCampfire", {
-    Title = "Auto Campfire",
+    Title = "Bring Random Things",
     Default = false,
     Callback = function(Value)
         AutoCampfireAtivo = Value
