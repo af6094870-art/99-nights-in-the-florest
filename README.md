@@ -115,17 +115,22 @@ Tabs.Brings:AddToggle("BringItemsToggle", {
         task.spawn(function()
             while _G.BringItems do
                 pcall(function()
-                    local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                    local player = game.Players.LocalPlayer
+                    local character = player.Character
+                    local hrp = character and character:FindFirstChild("HumanoidRootPart")
                     
-                    workspace.Items.Coal.CFrame = hrp.CFrame
-                    workspace.Items:GetChildren()[107].CFrame = hrp.CFrame
-                    workspace.Items:GetChildren()[92].CFrame = hrp.CFrame
-                    workspace.Items:GetChildren()[106].CFrame = hrp.CFrame
-                    workspace.Items:GetChildren()[94].CFrame = hrp.CFrame
-                    workspace.Items:GetChildren()[164].CFrame = hrp.CFrame
-                    workspace.Items:GetChildren()[145].CFrame = hrp.CFrame
+                    if hrp then
+                        -- Puxa estritamente os patches exatos da sua lista para você
+                        workspace.Items.Coal.CFrame = hrp.CFrame
+                        workspace.Items:GetChildren()[107].CFrame = hrp.CFrame
+                        workspace.Items:GetChildren()[92].CFrame = hrp.CFrame
+                        workspace.Items:GetChildren()[106].CFrame = hrp.CFrame
+                        workspace.Items:GetChildren()[94].CFrame = hrp.CFrame
+                        workspace.Items:GetChildren()[164].CFrame = hrp.CFrame
+                        workspace.Items:GetChildren()[145].CFrame = hrp.CFrame
+                    end
                 end)
-                task.wait(0.3)
+                task.wait(0.5)
             end
         end)
     end
