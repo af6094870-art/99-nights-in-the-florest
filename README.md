@@ -111,7 +111,6 @@ local function puxarItens()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
     local rootPart = character:WaitForChild("HumanoidRootPart", 5)
-
     if not rootPart then return end
 
     local itens = {
@@ -127,10 +126,16 @@ local function puxarItens()
         workspace.Items:GetChildren()[196],
         workspace.Items:GetChildren()[228],
         workspace.Items:GetChildren()[188],
+        workspace.Items:GetChildren()[30],
+        workspace.Items:GetChildren()[29],
+        workspace.Items:GetChildren()[27],
+        workspace.Items:GetChildren()[26],
+        workspace.Items:GetChildren()[25]
     }
 
     for _, item in pairs(itens) do
         if item then
+            print("[DEBUG] Puxando:", item.Name, item.ClassName) -- 🔍 confere o que está vindo
             pcall(function()
                 if item:IsA("BasePart") then
                     item.CFrame = rootPart.CFrame
