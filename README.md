@@ -96,6 +96,7 @@ end)
 -- ========================================================
 local Tabs = {
     Main = Window:AddTab({ Title = "main", Icon = "" }),
+    Teleport = Window:AddTab({ Title = "Teleport", Icon = "" }),
     Config = Window:AddTab({ Title = "config", Icon = "" }),
     Brings = Window:AddTab({ Title = "Bring And Fun", Icon = "" })
 }
@@ -200,6 +201,22 @@ Tabs.Brings:AddToggle("AutoCampfire", {
                     end
                     task.wait(0.1)
                 end
+            end)
+        end
+    end
+})
+
+Tabs.Teleport:AddButton({
+    Title = "Teleport campfire",
+    Description = "",
+    Callback = function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local rootPart = character:WaitForChild("HumanoidRootPart", 5)
+
+        if rootPart then
+            pcall(function()
+                rootPart.CFrame = CFrame.new(0, 1.5, 0)
             end)
         end
     end
