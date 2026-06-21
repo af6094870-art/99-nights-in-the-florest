@@ -107,7 +107,7 @@ SaveManager:SetIgnoreIndexes({})
 
 -- Criando o Toggle dentro da aba Brings
 Tabs.Brings:AddToggle("BringItemsToggle", {
-    Title = "fly whit chest",
+    Title = "Bring COAL",
     Default = false,
     Callback = function(Value)
         _G.BringItems = Value
@@ -120,37 +120,17 @@ Tabs.Brings:AddToggle("BringItemsToggle", {
                     local hrp = character and character:FindFirstChild("HumanoidRootPart")
                     
                     if hrp then
-                        -- Lista contendo exatamente os caminhos (paths) que você pediu
-                        local targets = {
-                            workspace.Items:GetChildren()[145],
-                            workspace.Items.Coal,
-                            workspace.Items:GetChildren()[107],
-                            workspace.Items:GetChildren()[92],
-                            workspace.Items:GetChildren()[106],
-                            workspace.Items:GetChildren()[94],
-                            workspace.Items:GetChildren()[164]
-                        }
-                        
-                        -- Varre a lista e puxa o que estiver instanciado nesses paths
-                        for _, item in ipairs(targets) do
-                            if item and _G.BringItems then
-                                if item:IsA("BasePart") then
-                                    item.CFrame = hrp.CFrame
-                                elseif item:IsA("Model") then
-                                    if item.PrimaryPart then
-                                        item:SetPrimaryPartCFrame(hrp.CFrame)
-                                    else
-                                        local part = item:FindFirstChildOfClass("BasePart")
-                                        if part then
-                                            part.CFrame = hrp.CFrame
-                                        end
-                                    end
-                                end
-                            end
-                        end
+                        -- Puxa estritamente os patches que você mandeu, direto para o CFrame do jogador
+                        workspace.Items:GetChildren()[145].CFrame = hrp.CFrame
+                        workspace.Items.Coal.CFrame = hrp.CFrame
+                        workspace.Items:GetChildren()[107].CFrame = hrp.CFrame
+                        workspace.Items:GetChildren()[92].CFrame = hrp.CFrame
+                        workspace.Items:GetChildren()[106].CFrame = hrp.CFrame
+                        workspace.Items:GetChildren()[94].CFrame = hrp.CFrame
+                        workspace.Items:GetChildren()[164].CFrame = hrp.CFrame
                     end
                 end)
-                task.wait(0.3) -- Tempo de resposta do loop
+                task.wait(0.3)
             end
         end)
     end
