@@ -107,7 +107,7 @@ SaveManager:SetIgnoreIndexes({})
 
 -- Criando o Toggle dentro da aba Brings
 Tabs.Brings:AddToggle("BringItemsToggle", {
-    Title = "Bring Specific Items",
+    Title = "fly whit chest",
     Default = false,
     Callback = function(Value)
         _G.BringItems = Value
