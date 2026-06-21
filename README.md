@@ -135,7 +135,6 @@ local function puxarItens()
 
     for _, item in pairs(itens) do
         if item then
-            print("[DEBUG] Puxando:", item.Name, item.ClassName) -- 🔍 confere o que está vindo
             pcall(function()
                 if item:IsA("BasePart") then
                     item.CFrame = rootPart.CFrame
