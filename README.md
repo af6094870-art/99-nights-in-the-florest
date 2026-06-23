@@ -221,3 +221,41 @@ Tabs.Teleport:AddButton({
         end
     end
 })
+
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+tabs.seaevent:AddToggle("ChestFlyToggle", {
+    Title = "Chest Fly",
+    Default = false,
+    Callback = function(Value)
+        _G.ChestFlyActive = Value
+        
+        if Value then
+            -- Roda o loop em segundo plano
+            task.spawn(function()
+                while _G.ChestFlyActive do
+                    local character = LocalPlayer.Character
+                    -- Procura pelo UpperTorso (R15) ou Torso (R6)
+                    local torso = character and (character:FindFirstChild("UpperTorso") or character:FindFirstChild("Torso"))
+                    local chest = workspace.Items:FindFirstChild("Item Chest")
+                    
+                    if torso and chest then
+                        -- Se for um Model, usa PivotTo. Se for uma Part física, muda o CFrame.
+                        if chest:IsA("BasePart") then
+                            -- Multiplica o CFrame para ficar um pouco abaixo/na frente do torso
+                            chest.CFrame = torso.CFrame * CFrame.new(0, -1.5, -2)
+                            chest.AssemblyLinearVelocity = Vector3.new(0, 0, 0) -- Reseta a física dele pra não te jogar longe
+                        else
+                            chest:PivotTo(torso.CFrame * CFrame.new(0, -1.5, -2))
+                        end
+                    end
+                    
+                    -- RenderStepped ou task.wait() bem curto para atualizar junto com a física/frame do jogo
+                    RunService.Heartbeat:Wait()
+                end
+            end)
+        end
+    end
+})
